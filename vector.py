@@ -1,5 +1,6 @@
 import math
 from decimal import Decimal, getcontext
+import itertools
 
 getcontext().prec = 30
 
@@ -21,9 +22,11 @@ class Vector(object):
     def __str__(self):
         return 'Vector: {}'.format([round(x, 3) for x in self.coordinates])
 
-
     def __eq__(self, v):
         return self.coordinates == v.coordinates
+
+    def __iter__(self):
+        return iter([x for x in self.coordinates])
 
     def plus(self, other_vector):
         result_coordinates = []
