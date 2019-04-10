@@ -1,5 +1,4 @@
 from decimal import Decimal, getcontext
-
 from vector import Vector
 
 getcontext().prec = 30
@@ -96,6 +95,34 @@ class Line(object):
                 return k
         raise Exception(Line.NO_NONZERO_ELTS_FOUND_MSG)
 
+    def is_parallel_to(self, other_line):
+        # Two lines are parallel if their normal vectors are parallel
+        return self.normal_vector.is_parallel(other_line.normal_vector)
+
+    def __eq__(self, other_line):
+        # Two lines are equal if
+        # They are parallel
+        # The vector connecting one point on each line is orthogonal to both line's normal vectors
+        if not self.is_parallel_to(other_line):
+            return False
+
+        x0 = self.basepoint
+        y0 = other_line.basepoint
+        difference_vector = x0.minus(y0)
+
+        return difference_vector.is_orthogonal(self.normal_vector)
+
+    def intersection_with(self, other_line):
+        A, B = self.normal_vector.coordinates
+        k1 = self.constant_term
+        C, D = other_line.normal_vector.coordinates
+        k2 = other_line.constant_term
+
+        denominator = (A*D - B*C)
+        x = (D*k1 - B*k2)/denominator
+        y = (-C*k1 + A*k2)/denominator
+
+        return [x, y]
 
 class MyDecimal(Decimal):
     def is_near_zero(self, eps=1e-10):

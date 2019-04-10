@@ -28,6 +28,9 @@ class Vector(object):
     def __iter__(self):
         return iter([x for x in self.coordinates])
 
+    def __getitem__(self, index):
+        return self.coordinates[index]
+
     def plus(self, other_vector):
         result_coordinates = []
         for index, coordinate in enumerate(self.coordinates, start=0):
