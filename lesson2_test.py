@@ -10,6 +10,13 @@ def run():
   test_normalize()
   test_dot_product()
   test_angle()
+  test_parallel_or_orthognal()
+  test_component_parallel_to()
+  test_component_orthogonal_to()
+  test_component_parallel_and_orthogonal_to()
+  test_cross_product()
+  test_area()
+  test_triangle()
 
 def test_vector_init():
   vector = Vector([1, 2])
@@ -72,5 +79,55 @@ def test_angle():
   vector6 = Vector([2.751, 8.259, 3.985])
   result = vector5.angle_degrees(vector6)
   print("%s angle to %s = %s degrees" % (vector5, vector5, round(result, 3)))
+
+def test_parallel_or_orthognal():
+  vector_pairs = [
+    [Vector([-7.579, -7.88]), Vector([22.737, 23.64])],
+    [Vector([-2.029, 9.97, 4.172]), Vector([-9.231, -6.639, -7.245])],
+    [Vector([-2.328, -7.284, -1.214]), Vector([-1.821, 1.072, -2.94])],
+    [Vector([2.118, 4.827]), Vector([0, 0])]
+  ]
+  for vector1, vector2 in vector_pairs:
+    is_parallel = vector1.is_parallel(vector2)
+    is_orthogonal = vector1.is_orthogonal(vector2)
+    print("%s and %s: Parallel: %s. Orthogonal: %s" % (vector1, vector2, is_parallel, is_orthogonal))
+
+def test_component_parallel_to():
+  vector1 = Vector([3.039, 1.879])
+  vector2 = Vector([0.825, 2.036])
+  result = vector1.component_parallel_to(vector2)
+  print("%s projected onto %s = %s" % (vector1, vector2, result))
+
+def test_component_orthogonal_to():
+  vector1 = Vector([-9.88, -3.264, -8.159])
+  vector2 = Vector([-2.155, -9.353, -9.473])
+  result = vector1.component_orthogonal_to(vector2)
+  print("%s orthogonal to %s = %s" % (vector1, vector2, result))
+
+def test_component_parallel_and_orthogonal_to():
+  vector1 = Vector([3.009, -6.172, 3.692, -2.51])
+  vector2 = Vector([6.404, -9.144, 2.759, 8.718])
+  parallel = vector1.component_parallel_to(vector2)
+  orthogonal = vector1.component_orthogonal_to(vector2)
+  print("%s projected onto %s = %s" % (vector1, vector2, parallel))
+  print("%s orthogonal to %s = %s" % (vector1, vector2, orthogonal))
+
+def test_cross_product():
+  vector1 = Vector([8.462, 7.893, -8.187])
+  vector2 = Vector([6.984, -5.975, 4.778])
+  result = vector1.cross_product(vector2)
+  print("%s x %s = %s" % (vector1, vector2, result))
+
+def test_area():
+  vector1 = Vector([-8.987, -9.838, 5.031])
+  vector2 = Vector([-4.268, -1.861, -8.866])
+  result = vector1.area(vector2)
+  print("Area of %s and %s = %s" % (vector1, vector2, round(result, 3)))
+
+def test_triangle():
+  vector1 = Vector([1.5, 9.547, 3.691])
+  vector2 = Vector([-6.007, 0.124, 5.772])
+  result = vector1.triangle(vector2)
+  print("Triangle of %s and %s = %s" % (vector1, vector2, round(result, 3)))
 
 run()
